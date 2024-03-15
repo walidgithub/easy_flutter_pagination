@@ -5,56 +5,51 @@ import '../components/components.dart';
 class PaginationView extends StatefulWidget {
   int totalPages;
   int currentPage;
-  
-  double radius;
-  double buttonHeight;
-  int bounceDuration;
-  double iconSize;
-  double textFontSize;
-  double spaceBetween;
-  double padding;
-  double margin;
-
   Function getData;
+  
+  final radius;
+  final buttonHeight;
+  final bounceDuration;
+  final iconSize;
+  final textFontSize;
+  final spaceBetween;
+  final normalWidth;
+  final padding;
+  final margin;
 
-  Color selectedTextColor;
-  Color unSelectedTextColor;
-  
-  Color firstButtonColor;
-  Color lastButtonColor;
-  Color middleButtonColor;
-  Color activeButtonColor;
-  Color prevButtonColor;
-  Color nextButtonColor;
-  
-  Color dotsColor;
+  final selectedTextColor;
+  final unSelectedTextColor;
+
+  final firstButtonColor;
+  final lastButtonColor;
+  final middleButtonColor;
+  final activeButtonColor;
+  final prevAndNextButtonColor;
+  final dotsColor;
   PaginationView(
       {
         required this.totalPages,
         required this.currentPage,
-        
-        required this.radius,
-        required this.buttonHeight,
-        required this.bounceDuration,
-        required this.iconSize,
-        required this.textFontSize,
-        required this.spaceBetween,
-        required this.padding,
-        required this.margin,
-
         required this.getData,
 
-        required this.selectedTextColor,
-        required this.unSelectedTextColor,
-        
-        required this.firstButtonColor,
-        required this.lastButtonColor,
-        required this.middleButtonColor,
-        required this.activeButtonColor,
-        required this.prevButtonColor,
-        required this.nextButtonColor,
-        
-        required this.dotsColor,
+        this.radius,
+        this.buttonHeight,
+        this.bounceDuration,
+        this.iconSize,
+        this.textFontSize,
+        this.spaceBetween,
+        this.padding,
+        this.margin,
+        this.normalWidth,
+
+        this.selectedTextColor,
+        this.unSelectedTextColor,
+        this.firstButtonColor,
+        this.lastButtonColor,
+        this.middleButtonColor,
+        this.activeButtonColor,
+        this.prevAndNextButtonColor,
+        this.dotsColor,
         Key? key})
       : super(key: key);
 
@@ -100,10 +95,10 @@ class _PaginationViewState extends State<PaginationView> {
       children: [
         // decrease current page
         Bounceable(
-            duration: Duration(milliseconds: widget.bounceDuration),
+            duration: Duration(milliseconds: widget.bounceDuration ?? 300),
             onTap: () async {
               await Future.delayed(
-                  Duration(milliseconds: widget.bounceDuration));
+                  Duration(milliseconds: widget.bounceDuration ?? 300));
               if (currentPage >= 2) {
                 currentPage--;
 
@@ -144,18 +139,18 @@ class _PaginationViewState extends State<PaginationView> {
             },
             child: Icon(
               Icons.arrow_back_ios,
-              size: widget.iconSize,
+              size: widget.iconSize ?? 25,
               color: currentPage > 1
-                  ? widget.prevButtonColor
-                  : widget.prevButtonColor.withOpacity(0.5),
+                  ? widget.prevAndNextButtonColor ?? const Color(0xFF84BD93)
+                  : widget.prevAndNextButtonColor ?? const Color(0xFF84BD93).withOpacity(0.5),
             )),
 
         // current page = 1
         Bounceable(
-            duration: Duration(milliseconds: widget.bounceDuration),
+            duration: Duration(milliseconds: widget.bounceDuration ?? 300),
             onTap: () async {
               await Future.delayed(
-                  Duration(milliseconds: widget.bounceDuration));
+                  Duration(milliseconds: widget.bounceDuration ?? 300));
 
               currentPage = 1;
 
@@ -175,17 +170,18 @@ class _PaginationViewState extends State<PaginationView> {
                   child: Text('1',
                       style: TextStyle(
                           color: currentPage == 1
-                              ? widget.selectedTextColor
-                              : widget.unSelectedTextColor,
-                          fontSize: widget.textFontSize)),
+                              ? widget.selectedTextColor ?? const Color(0xFFE6DCCD)
+                              : widget.unSelectedTextColor ?? const Color(0xFFFFFFFF),
+                          fontSize: widget.textFontSize ?? 20)),
                 ),
-                height: widget.buttonHeight,
+                height: widget.buttonHeight ?? 30,
+                width: widget.normalWidth ?? 30,
                 color: currentPage == 1
-                    ? widget.activeButtonColor
-                    : widget.firstButtonColor,
-                borderColor: widget.firstButtonColor,
+                    ? widget.activeButtonColor ?? const Color(0xFF84BD93)
+                    : widget.firstButtonColor ?? const Color(0xFFFD9A2B),
+                borderColor: widget.firstButtonColor ?? const Color(0xFFFD9A2B),
                 borderWidth: 0.0,
-                borderRadius: widget.radius)),
+                borderRadius: widget.radius ?? 5)),
 
         widget.totalPages >= 5
             ? middlePages.isNotEmpty
@@ -193,7 +189,7 @@ class _PaginationViewState extends State<PaginationView> {
             ? Text(
           ' ..',
           style: TextStyle(
-              color: widget.dotsColor, fontSize: widget.textFontSize),
+              color: widget.dotsColor ?? const Color(0xFF84BD93), fontSize: widget.textFontSize ?? 20),
         )
             : Container()
             : Container()
@@ -209,7 +205,7 @@ class _PaginationViewState extends State<PaginationView> {
         Row(
           children: [
             SizedBox(
-              height: widget.buttonHeight,
+              height: widget.buttonHeight ?? 30,
               child: ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
@@ -220,11 +216,11 @@ class _PaginationViewState extends State<PaginationView> {
                     children: [
                       Bounceable(
                           duration: Duration(
-                              milliseconds: widget.bounceDuration),
+                              milliseconds: widget.bounceDuration ?? 300),
                           onTap: () async {
                             await Future.delayed(Duration(
                                 milliseconds:
-                                widget.bounceDuration));
+                                widget.bounceDuration ?? 300));
 
                             currentPage = middlePages[index];
                             if (widget.totalPages >= 5) {
@@ -262,28 +258,29 @@ class _PaginationViewState extends State<PaginationView> {
                           },
                           child: containerComponent(
                               context,
-                              margin: EdgeInsets.only(left: widget.margin),
+                              margin: EdgeInsets.only(left: widget.margin ?? 2),
                               Center(
                                   child: Text(middlePages[index].toString(),
                                       style: TextStyle(
                                           color:
                                           currentPage == middlePages[index]
-                                              ? widget.selectedTextColor
-                                              : widget.unSelectedTextColor,
-                                          fontSize: widget.textFontSize))),
+                                              ? widget.selectedTextColor ?? const Color(0xFFE6DCCD)
+                                              : widget.unSelectedTextColor ?? const Color(0xFFFFFFFF),
+                                          fontSize: widget.textFontSize ?? 20))),
                               padding: EdgeInsets.fromLTRB(
-                                  middlePages[index].toString().length > 1 ? widget.padding * 2 : widget.padding,
+                                  middlePages[index].toString().length > 1 ? widget.padding ?? 5 * 2 : widget.padding ?? 5,
                                   0,
-                                  middlePages[index].toString().length > 1 ? widget.padding * 2 : widget.padding,
+                                  middlePages[index].toString().length > 1 ? widget.padding ?? 5 * 2 : widget.padding ?? 5,
                                   0),
+                              width: middlePages[index].toString().length > 1 ? null : widget.normalWidth ?? 30,
                               color: currentPage == middlePages[index]
-                                  ? widget.activeButtonColor
-                                  : widget.middleButtonColor,
+                                  ? widget.activeButtonColor ?? const Color(0xFF84BD93)
+                                  : widget.middleButtonColor ?? const Color(0xFFE6DCCD),
                               borderColor: currentPage == middlePages[index]
-                                  ? widget.activeButtonColor
-                                  : widget.middleButtonColor,
+                                  ? widget.activeButtonColor ?? const Color(0xFF84BD93)
+                                  : widget.middleButtonColor ?? const Color(0xFFE6DCCD),
                               borderWidth: 0.0,
-                              borderRadius: widget.radius))
+                              borderRadius: widget.radius ?? 5))
                     ],
                   );
                 },
@@ -293,7 +290,7 @@ class _PaginationViewState extends State<PaginationView> {
         ),
 
         SizedBox(
-          width: widget.spaceBetween,
+          width: widget.spaceBetween ?? 5,
         ),
 
         widget.totalPages >= 5
@@ -302,7 +299,7 @@ class _PaginationViewState extends State<PaginationView> {
             ? Text(
           '..',
           style: TextStyle(
-              color: widget.dotsColor, fontSize: widget.textFontSize),
+              color: widget.dotsColor ?? const Color(0xFF84BD93), fontSize: widget.textFontSize ?? 20),
         )
             : Container()
             : Container()
@@ -312,7 +309,7 @@ class _PaginationViewState extends State<PaginationView> {
             ? middlePages.isNotEmpty
             ? middlePages[2] < widget.totalPages - 1
             ? SizedBox(
-          width: widget.spaceBetween,
+          width: widget.spaceBetween ?? 5,
         )
             : Container()
             : Container()
@@ -324,10 +321,10 @@ class _PaginationViewState extends State<PaginationView> {
           children: [
             Bounceable(
                 duration: Duration(
-                    milliseconds: widget.bounceDuration),
+                    milliseconds: widget.bounceDuration ?? 300),
                 onTap: () async {
                   await Future.delayed(Duration(
-                      milliseconds: widget.bounceDuration));
+                      milliseconds: widget.bounceDuration ?? 300));
 
                   currentPage = widget.totalPages;
 
@@ -347,40 +344,41 @@ class _PaginationViewState extends State<PaginationView> {
                       child: Text(widget.totalPages.toString(),
                           style: TextStyle(
                               color: currentPage == widget.totalPages
-                                  ? widget.selectedTextColor
-                                  : widget.unSelectedTextColor,
-                              fontSize: widget.textFontSize)),
+                                  ? widget.selectedTextColor ?? const Color(0xFFE6DCCD)
+                                  : widget.unSelectedTextColor ?? const Color(0xFFFFFFFF),
+                              fontSize: widget.textFontSize ?? 20)),
                     ),
-                    height: widget.buttonHeight,
+                    height: widget.buttonHeight ?? 30,
+                    width: widget.totalPages.toString().length > 1 ? null : widget.normalWidth ?? 30,
                     padding: EdgeInsets.fromLTRB(
-                        widget.totalPages.toString().length > 1 ? widget.padding * 2 : widget.padding,
+                        widget.totalPages.toString().length > 1 ? widget.padding ?? 5 * 2 : widget.padding ?? 5,
                         0,
-                        widget.totalPages.toString().length > 1 ? widget.padding * 2 : widget.padding,
+                        widget.totalPages.toString().length > 1 ? widget.padding ?? 5 * 2 : widget.padding ?? 5,
                         0),
                     color: widget.totalPages == currentPage
-                        ? widget.activeButtonColor
-                        : widget.lastButtonColor,
+                        ? widget.activeButtonColor ?? const Color(0xFF84BD93)
+                        : widget.lastButtonColor ?? const Color(0xFF73665C),
                     borderColor: widget.totalPages == currentPage
-                        ? widget.activeButtonColor
-                        : widget.lastButtonColor,
+                        ? widget.activeButtonColor ?? const Color(0xFF84BD93)
+                        : widget.lastButtonColor ?? const Color(0xFF73665C),
                     borderWidth: 0.0,
-                    borderRadius: widget.radius))
+                    borderRadius: widget.radius ?? 5))
           ],
         )
             : Container(),
 
         widget.totalPages > 1
             ? SizedBox(
-          width: widget.spaceBetween,
+          width: widget.spaceBetween ?? 5,
         )
             : Container(),
 
         // increase current page
         Bounceable(
-            duration: Duration(milliseconds: widget.bounceDuration),
+            duration: Duration(milliseconds: widget.bounceDuration ?? 300),
             onTap: () async {
               await Future.delayed(
-                  Duration(milliseconds: widget.bounceDuration));
+                  Duration(milliseconds: widget.bounceDuration ?? 300));
 
               if (currentPage < widget.totalPages) {
                 currentPage++;
@@ -418,10 +416,10 @@ class _PaginationViewState extends State<PaginationView> {
               widget.getData(currentPage, middlePages);
             },
             child: Icon(Icons.arrow_forward_ios,
-                size: widget.iconSize,
+                size: widget.iconSize ?? 25,
                 color: currentPage == widget.totalPages
-                    ? widget.nextButtonColor.withOpacity(0.5)
-                    : widget.nextButtonColor)),
+                    ? widget.prevAndNextButtonColor ?? const Color(0xFF84BD93).withOpacity(0.5)
+                    : widget.prevAndNextButtonColor ?? const Color(0xFF84BD93))),
       ],
     );
   }
