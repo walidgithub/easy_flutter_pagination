@@ -11,29 +11,75 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages).
 -->
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+This component is designed for implementing pagination in Flutter.
 
-## Features
-
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+![OpenAI Logo](https://ibb.co/VvP9j83)
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+This package requires you to provide the current page number, total number of pages, and the function responsible for fetching data on a per-page basis,
+you can add other properties like colors, padding, font size, width and others.
+## Example
 
 ```dart
-const like = 'sample';
+import 'package:flutter/material.dart';
+
+import 'components/custome_pagination.dart';
+
+class PaginationExample extends StatefulWidget {
+  int currentPage;
+  int totalPages;
+  List<int> middlePages;
+  PaginationExample({required this.currentPage, required this.totalPages, required this.middlePages, Key? key}) : super(key: key);
+
+  @override
+  State<PaginationExample> createState() => _PaginationExampleState();
+}
+
+class _PaginationExampleState extends State<PaginationExample> {
+  int currentPage = 1;
+  int totalPages = 10;
+  List<int> middlePages = [];
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+        height: 40,
+        width: MediaQuery.of(context).size.width,
+        child: PaginationView(
+          totalPages: totalPages,
+          currentPage: currentPage,
+          getData: (returnCurrentPage,
+              returnedMiddlePages) async {
+            currentPage = returnCurrentPage;
+            middlePages = returnedMiddlePages;
+            await getPageData(currentPage);
+          },
+        ));
+  }
+
+  Future<void> getPageData(int currentPage) async {
+    // fetch data
+  }
+}
+
+class TestPagination extends StatefulWidget {
+  const TestPagination({Key? key}) : super(key: key);
+
+  @override
+  State<TestPagination> createState() => _TestPaginationState();
+}
+
+class _TestPaginationState extends State<TestPagination> {
+  int currentPage = 1;
+  int totalPages = 100;
+
+  @override
+  Widget build(BuildContext context) {
+    return PaginationExample(currentPage: currentPage, totalPages: totalPages, middlePages: []);
+  }
+}
 ```
 
-## Additional information
-
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+## Follow me in LinkedIn
+https://www.linkedin.com/in/walidbarakat1985/

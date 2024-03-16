@@ -1,7 +1,7 @@
 name: flutter_pagination
 description: "This component is designed for implementing pagination in Flutter."
 version: 0.0.1
-homepage:
+homepage: https://github.com/walidgithub/pagination_package.git
 
 environment:
   sdk: '>=3.2.1 <4.0.0'
