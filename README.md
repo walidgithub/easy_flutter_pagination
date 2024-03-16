@@ -29,10 +29,7 @@ import 'package:flutter/material.dart';
 import 'components/custom_pagination.dart';
 
 class PaginationExample extends StatefulWidget {
-  int currentPage;
-  int totalPages;
-  List<int> middlePages;
-  PaginationExample({required this.currentPage, required this.totalPages, required this.middlePages, Key? key}) : super(key: key);
+  PaginationExample({Key? key}) : super(key: key);
 
   @override
   State<PaginationExample> createState() => _PaginationExampleState();
@@ -40,9 +37,9 @@ class PaginationExample extends StatefulWidget {
 
 class _PaginationExampleState extends State<PaginationExample> {
   int currentPage = 1;
-  int totalPages = 10;
+  int totalPages = 100;
   List<int> middlePages = [];
-
+  
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -62,23 +59,6 @@ class _PaginationExampleState extends State<PaginationExample> {
 
   Future<void> getPageData(int currentPage) async {
     // fetch data
-  }
-}
-
-class TestPagination extends StatefulWidget {
-  const TestPagination({Key? key}) : super(key: key);
-
-  @override
-  State<TestPagination> createState() => _TestPaginationState();
-}
-
-class _TestPaginationState extends State<TestPagination> {
-  int currentPage = 1;
-  int totalPages = 100;
-
-  @override
-  Widget build(BuildContext context) {
-    return PaginationExample(currentPage: currentPage, totalPages: totalPages, middlePages: []);
   }
 }
 ```
