@@ -20,6 +20,7 @@ This component is designed for implementing pagination in Flutter.
 
 This package requires you to provide the current page number, total number of pages, and the function responsible for fetching data on a per-page basis,
 you can add other properties like colors, padding, font size, width and others.
+
 ## Example
 
 ```dart
