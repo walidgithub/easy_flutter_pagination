@@ -13,7 +13,7 @@ and the Flutter guide for
 
 This component is designed for implementing pagination in Flutter.
 
-![OpenAI Logo](https://ibb.co/VvP9j83)
+![OpenAI Logo](https://i.postimg.cc/fyNGCpws/pagination.jpg)
 
 
 ## Getting started
@@ -26,7 +26,7 @@ you can add other properties like colors, padding, font size, width and others.
 ```dart
 import 'package:flutter/material.dart';
 
-import 'components/custome_pagination.dart';
+import 'components/custom_pagination.dart';
 
 class PaginationExample extends StatefulWidget {
   int currentPage;
