@@ -1,6 +1,6 @@
 name: easy_flutter_pagination
 description: "This component is designed for implementing pagination in Flutter."
-version: 0.0.2
+version: 0.0.3
 homepage: https://github.com/walidgithub/easy_flutter_pagination
 
 environment:
