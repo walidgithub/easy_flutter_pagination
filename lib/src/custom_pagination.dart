@@ -7,25 +7,25 @@ class PaginationView extends StatefulWidget {
   int currentPage;
   Function getData;
 
-  final radius;
-  final buttonHeight;
-  final bounceDuration;
-  final iconSize;
-  final textFontSize;
-  final spaceBetween;
-  final normalWidth;
-  final padding;
-  final margin;
+  final double? radius;
+  final double? buttonHeight;
+  final int? bounceDuration;
+  final double? iconSize;
+  final double? textFontSize;
+  final double? spaceBetween;
+  final double? normalWidth;
+  final double? padding;
+  final double? margin;
 
-  final selectedTextColor;
-  final unSelectedTextColor;
+  final Color? selectedTextColor;
+  final Color? unSelectedTextColor;
 
-  final firstButtonColor;
-  final lastButtonColor;
-  final middleButtonColor;
-  final activeButtonColor;
-  final prevAndNextButtonColor;
-  final dotsColor;
+  final Color? firstButtonColor;
+  final Color? lastButtonColor;
+  final Color? middleButtonColor;
+  final Color? activeButtonColor;
+  final Color? prevAndNextButtonColor;
+  final Color? dotsColor;
   PaginationView(
       {required this.totalPages,
       required this.currentPage,
